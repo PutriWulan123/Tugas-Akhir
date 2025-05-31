@@ -2,7 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider as ServiceProvider;
+
+use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Middleware\RoleMiddleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,8 +22,14 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    // public function boot(): void
+    // {
+    //     //
+    // }
+    protected function registerMiddlewareAliases(): void
     {
-        //
+        Route::aliasMiddleware('role', RoleMiddleware::class);
+        Route::aliasMiddleware('permission', PermissionMiddleware::class);
+        Route::aliasMiddleware('role_or_permission', RoleOrPermissionMiddleware::class);
     }
 }
