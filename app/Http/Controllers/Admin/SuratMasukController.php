@@ -14,17 +14,19 @@ class SuratMasukController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $sm = SuratMasuk::with('all');
-        return view('komponen.surat-masuk');
-    }
+{
+    $jenisSurat = JenisSurat::all(); // ambil data jenis surat untuk dropdown
+    $suratMasuk = SuratMasuk::with('jenisSurat')->get(); // ambil data surat masuk beserta jenis suratnya (pastikan relasi 'jenisSurat' ada di model SuratMasuk)
+
+    return view('komponen.surat-masuk', compact('jenisSurat', 'suratMasuk'));
+}
 
     /**
      * Show the form for creating a new resource.
      */
     public function create(Request $request)
     {
-        $sm = SuratMasuk::create($request->all());
+        $suratMasuk = SuratMasuk::create($request->all());
         return redirect()->route('surat-masuk')->with('sukses', 'Data Berhasil Ditambahkan');
     }
 
@@ -59,7 +61,13 @@ class SuratMasukController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $suratMasuk = SuratMasuk::find($id);
+
+        if (!$suratMasuk) {
+            return redirect()->route('show')->with('error', 'data tidak ditemukan');
+        }
+
+        return view('komponen.detail-data', compact('suratMasuk'));
     }
 
     /**
@@ -75,7 +83,9 @@ class SuratMasukController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = SuratMasuk::find($id);
+        $data->update($request->all());
+        return redirect()->route('komponen.update-data')->with('sukses', 'Data Berhasil Diupdate');
     }
 
     /**
@@ -83,6 +93,8 @@ class SuratMasukController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = SuratMasuk::find($id);
+        $data->delete();
+        return redirect()->route('suratMasuk')->with('sukses', 'Data Berhasil Dihapus');
     }
 }

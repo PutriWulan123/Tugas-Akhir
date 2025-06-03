@@ -22,29 +22,21 @@ Route::group([
     Route::get("/surat-masuk", [Controllers\Admin\SuratMasukController::class, "index"])
         ->middleware(['auth', 'verified'])
         ->name('surat-masuk');
-    Route::post("/surat-masuk/tambah-data", [Controllers\Admin\SuratMasukController::class, "store"])
+    Route::get("/surat-masuk/tambah-data", [Controllers\Admin\SuratMasukController::class, "store"])
         ->middleware(['auth', 'verified'])
         ->name('komponen.tambah.surat');
-    Route::get("/surat-masuk/edit-data", [Controllers\Admin\SuratMasukController::class, "create"])
+        Route::get("/surat-masuk/detail-data", [Controllers\Admin\SuratMasukController::class, "show"])
         ->middleware(['auth', 'verified'])
-        ->name('surat-masuk');
-    Route::get("/surat-masuk/detail-data", [Controllers\Admin\SuratMasukController::class, "create"])
+        ->name('komponen.detail-data');
+        Route::put("/surat-masuk/update-data/{id}", [Controllers\Admin\SuratMasukController::class, "update"])
         ->middleware(['auth', 'verified'])
-        ->name('surat-masuk');  
-    Route::get("/surat-masuk/hapus-data", [Controllers\Admin\SuratMasukController::class, "create"])
+        ->name('komponen.update-data');
+        Route::get("/surat-masuk/hapus-data", [Controllers\Admin\SuratMasukController::class, "destroy"])
         ->middleware(['auth', 'verified'])
-        ->name('surat-masuk');      
+        ->name('komponen.hapus-data');
+          
 });
 
-
-// route admin
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-// });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
@@ -64,13 +56,4 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-// Route::get('/admin', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified', 'role:admin']);
-// Route::get('/tamu', function () {
-//     return view('tampilan.master');
-// });
-
-
 require __DIR__.'/auth.php';
