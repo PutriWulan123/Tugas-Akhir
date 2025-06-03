@@ -81,11 +81,20 @@ class SuratMasukController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
+
+        $validate = $request->validate([
+            'kode_surat' => 'required',
+            'nomor_surat' => 'required',
+            'id_jenis_surat' => 'exists:jenis_surats,id',
+            'judul_surat' => 'required',
+            'tanggal_surat' => 'required',
+            'deskripsi' => 'required'
+        ]);
         $data = SuratMasuk::find($id);
-        $data->update($request->all());
-        return redirect()->route('komponen.update-data')->with('sukses', 'Data Berhasil Diupdate');
+        $data->update($validate);
+        return redirect()->route('surat-masuk')->with('sukses', 'Data Berhasil Diupdate');
     }
 
     /**

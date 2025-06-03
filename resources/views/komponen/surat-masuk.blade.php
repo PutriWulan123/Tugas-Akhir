@@ -103,7 +103,7 @@
                     <div class="modal fade" id="modalEdit{{ $surat->id }}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modalEditLabel{{ $surat->id }}" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form method="POST" action="#">
+                                <form method="POST" action="{{ route('komponen.update-data', $surat->id) }}" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="modal-header">

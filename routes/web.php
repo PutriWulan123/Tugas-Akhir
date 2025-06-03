@@ -22,7 +22,7 @@ Route::group([
     Route::get("/surat-masuk", [Controllers\Admin\SuratMasukController::class, "index"])
         ->middleware(['auth', 'verified'])
         ->name('surat-masuk');
-    Route::get("/surat-masuk/tambah-data", [Controllers\Admin\SuratMasukController::class, "store"])
+    Route::post("/surat-masuk/tambah-data", [Controllers\Admin\SuratMasukController::class, "store"])
         ->middleware(['auth', 'verified'])
         ->name('komponen.tambah.surat');
         Route::get("/surat-masuk/detail-data", [Controllers\Admin\SuratMasukController::class, "show"])
@@ -34,13 +34,13 @@ Route::group([
         Route::get("/surat-masuk/hapus-data", [Controllers\Admin\SuratMasukController::class, "destroy"])
         ->middleware(['auth', 'verified'])
         ->name('komponen.hapus-data');
-          
+
 });
 
 
 
 Route::middleware('auth')->group(function () {
-    
+
     // Route::get('register', [RegisteredUserController::class, 'create'])
     //     ->name('register');
 
